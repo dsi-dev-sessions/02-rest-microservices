@@ -1,0 +1,15 @@
+{
+  "name": "rating-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "body-parser": "^1.15.2",
+    "consul": "^0.27.0",
+    "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.9",
+    "neo4j-driver": "^1.1.0-M03",
+    "uuid": "^3.0.0"
+  }
+}

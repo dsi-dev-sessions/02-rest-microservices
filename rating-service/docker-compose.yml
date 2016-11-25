@@ -1,0 +1,15 @@
+version: '2'
+services:
+  neo4j:
+    image: neo4j
+    environment:
+    - NEO4J_AUTH=none
+    ports:
+    - 7474:7474
+  rating-service:
+    build: .
+    environment:
+    - NEO4J_HOSTNAME=neo4j
+    - JWT_SECRET=123
+    ports:
+    - 3000:3000
