@@ -82,7 +82,7 @@ public class ActorsResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Actor create(@RequestBody IncomingActor incomingActor) {
         if (incomingActor == null || incomingActor.getName() == null || incomingActor.getName().isEmpty()) {
-            throw actorNotFound();
+            throw new MovieAPIException(HttpStatus.BAD_REQUEST, "Can't create actor because name is null.");
         }
         return actorService.create(incomingActor.getName());
     }
