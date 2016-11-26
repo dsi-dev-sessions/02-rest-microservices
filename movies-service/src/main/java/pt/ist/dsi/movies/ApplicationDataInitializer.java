@@ -109,7 +109,7 @@ public class ApplicationDataInitializer implements CommandLineRunner {
     public void run(String... arg0) throws Exception {
         createActors();
         logger.info("Start population of {}", searchMovieName);
-        IntStream.range(1, 11).forEach(this::createMovies);
+        IntStream.range(1, 2).forEach(this::createMovies);
     }
     
     private void createMovies(int page) {

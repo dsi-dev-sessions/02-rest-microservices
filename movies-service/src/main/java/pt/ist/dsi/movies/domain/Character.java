@@ -15,10 +15,10 @@ public class Character {
     
     private String name;
     
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Actor actor;
     
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Movie movie;
     
     Character() {

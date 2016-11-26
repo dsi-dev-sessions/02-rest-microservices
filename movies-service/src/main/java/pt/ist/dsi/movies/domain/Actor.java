@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Actor {
     
@@ -21,7 +23,7 @@ public class Actor {
     @Column(unique = true)
     private String name;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "actor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "actor", orphanRemoval = true)
     private Set<Character> characters;
     
     protected Actor() {
@@ -32,6 +34,10 @@ public class Actor {
         this.characters = new HashSet<>();
     }
     
+    public Long getId() {
+        return id;
+    }
+    
     public String getName() {
         return name;
     }
@@ -40,6 +46,7 @@ public class Actor {
         this.name = name;
     }
     
+    @JsonIgnore
     public Set<Character> getCharacters() {
         return characters;
     }
@@ -86,5 +93,4 @@ public class Actor {
     public String toString() {
         return "Actor [id=" + id + ", name=" + name + "]";
     }
-    
 }
