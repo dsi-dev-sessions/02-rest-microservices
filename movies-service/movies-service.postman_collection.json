@@ -1,0 +1,104 @@
+{
+	"variables": [],
+	"info": {
+		"name": "movies-service",
+		"_postman_id": "d46f0737-90cc-f501-ac7c-81449ab87e22",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Actor Rest Controller",
+			"description": "",
+			"item": [
+				{
+					"name": "all actors",
+					"request": {
+						"url": "http://localhost:8080/actors",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"rating\": 2, \"movie\": 2}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "only actor 1",
+					"request": {
+						"url": "http://localhost:8080/actors/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update actor 1",
+					"request": {
+						"url": "http://localhost:8080/actors/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\" : \"David Martinhu\" }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create new actor",
+					"request": {
+						"url": "http://localhost:8080/actors",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ricardo Rodrigues\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete actor 4",
+					"request": {
+						"url": "http://localhost:8080/actors/4",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie Rest Controller",
+			"description": "",
+			"item": []
+		}
+	]
+}

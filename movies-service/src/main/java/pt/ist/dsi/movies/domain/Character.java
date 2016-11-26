@@ -1,10 +1,14 @@
 package pt.ist.dsi.movies.domain;
 
+import pt.ist.dsi.movies.domain.Actor.View;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Character {
@@ -35,6 +39,7 @@ public class Character {
         return id;
     }
     
+    @JsonView({ View.WithCharacters.class })
     public String getName() {
         return name;
     }
@@ -51,6 +56,7 @@ public class Character {
         this.actor = actor;
     }
     
+    @JsonView({ View.WithCharacters.class })
     public Movie getMovie() {
         return movie;
     }

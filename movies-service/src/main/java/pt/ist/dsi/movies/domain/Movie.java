@@ -1,5 +1,7 @@
 package pt.ist.dsi.movies.domain;
 
+import pt.ist.dsi.movies.domain.Actor.View;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Movie {
@@ -32,6 +36,7 @@ public class Movie {
         
     }
     
+    @JsonView({ View.WithCharacters.class })
     public Long getId() {
         return id;
     }
@@ -40,6 +45,7 @@ public class Movie {
         this.id = id;
     }
     
+    @JsonView({ View.WithCharacters.class })
     public String getTitle() {
         return title;
     }

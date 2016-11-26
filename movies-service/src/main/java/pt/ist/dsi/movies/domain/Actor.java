@@ -11,10 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Actor {
+    
+    public interface View {
+        public interface WithCharacters extends View {
+            
+        }
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,10 +40,12 @@ public class Actor {
         this.characters = new HashSet<>();
     }
     
+    @JsonView({ View.class })
     public Long getId() {
         return id;
     }
     
+    @JsonView({ View.class })
     public String getName() {
         return name;
     }
@@ -46,7 +54,7 @@ public class Actor {
         this.name = name;
     }
     
-    @JsonIgnore
+    @JsonView({ View.WithCharacters.class })
     public Set<Character> getCharacters() {
         return characters;
     }

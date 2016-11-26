@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
@@ -48,31 +50,12 @@ public class ActorsResource {
     }
     
     @GetMapping
+    @JsonView(Actor.View.class)
     public List<Actor> all() {
         return actorService.findAll();
     }
-
-//    @RequestMapping(value = "/{actor}", method = RequestMethod.GET)
-//    public ResponseEntity<?> getActor(@PathVariable("actor") String actor) {
-//
-//        if (actor == null || actor.isEmpty()) {
-//            return ResponseEntity.badRequest().body("Actor can't be null");
-//        }
-//        try {
-//            Long id = Long.parseLong(actor);
-//            Actor result = actorRepository.findOne(id);
-//
-//            if (result == null) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            return ResponseEntity.ok(result);
-//        } catch (NumberFormatException nfe) {
-//            return ResponseEntity.badRequest().body("Actor is not a valid id.");
-//        }
-//
-//    }
     
+    @JsonView(Actor.View.WithCharacters.class)
     @GetMapping(value = "/{actor}")
     public Actor get(@PathVariable Optional<Actor> actor) {
         return actor.orElseThrow(this::actorNotFound);
@@ -80,6 +63,7 @@ public class ActorsResource {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @JsonView(Actor.View.class)
     public Actor create(@RequestBody IncomingActor incomingActor) {
         if (StringUtils.isEmpty(incomingActor.getName())) {
             throw new MovieAPIException(HttpStatus.BAD_REQUEST, "Can't create actor because name is null.");
@@ -88,6 +72,7 @@ public class ActorsResource {
     }
     
     @PutMapping(value = "/{actor}")
+    @JsonView(Actor.View.class)
     public Actor update(@PathVariable Optional<Actor> actor, @RequestBody IncomingActor incomingActor) {
         return actorService.update(actor.orElseThrow(this::actorNotFound), incomingActor.getName());
     }
