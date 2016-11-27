@@ -2,6 +2,8 @@ package pt.ist.dsi.movies.api;
 
 import pt.ist.dsi.movies.domain.Actor;
 import pt.ist.dsi.movies.domain.ActorService;
+import pt.ist.dsi.movies.domain.View;
+import pt.ist.dsi.movies.domain.View.ActorWithCharacters;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +52,12 @@ public class ActorsResource {
     }
     
     @GetMapping
-    @JsonView(Actor.View.class)
+    @JsonView(View.class)
     public List<Actor> all() {
         return actorService.findAll();
     }
     
-    @JsonView(Actor.View.WithCharacters.class)
+    @JsonView(ActorWithCharacters.class)
     @GetMapping(value = "/{actor}")
     public Actor get(@PathVariable Optional<Actor> actor) {
         return actor.orElseThrow(this::actorNotFound);
@@ -63,7 +65,7 @@ public class ActorsResource {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @JsonView(Actor.View.class)
+    @JsonView(View.class)
     public Actor create(@RequestBody IncomingActor incomingActor) {
         if (StringUtils.isEmpty(incomingActor.getName())) {
             throw new MovieAPIException(HttpStatus.BAD_REQUEST, "Can't create actor because name is null.");
@@ -72,7 +74,7 @@ public class ActorsResource {
     }
     
     @PutMapping(value = "/{actor}")
-    @JsonView(Actor.View.class)
+    @JsonView(View.class)
     public Actor update(@PathVariable Optional<Actor> actor, @RequestBody IncomingActor incomingActor) {
         return actorService.update(actor.orElseThrow(this::actorNotFound), incomingActor.getName());
     }

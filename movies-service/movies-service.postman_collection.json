@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "movies-service",
-		"_postman_id": "d46f0737-90cc-f501-ac7c-81449ab87e22",
+		"_postman_id": "0f495c37-d38f-0179-a23d-627f4830515b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -73,7 +73,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Ricardo Rodrigues\"\n}"
+							"raw": "{\n  \"name\": \"José Tribolet\"\n}"
 						},
 						"description": ""
 					},
@@ -98,7 +98,110 @@
 		{
 			"name": "Movie Rest Controller",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "all movies",
+					"request": {
+						"url": "http://localhost:8080/movies",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"rating\": 2, \"movie\": 2}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "only movie 1",
+					"request": {
+						"url": "http://localhost:8080/movies/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update movie 1",
+					"request": {
+						"url": "http://localhost:8080/movies/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\" : \"Superman em Lisboa\" }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create new movie",
+					"request": {
+						"url": "http://localhost:8080/movies",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Superman no Técnico\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add character",
+					"request": {
+						"url": "http://localhost:8080/movies/12/characters",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Clark Kent\",\n  \"actor\": 12\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete character",
+					"request": {
+						"url": "http://localhost:8080/movies/1/characters/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

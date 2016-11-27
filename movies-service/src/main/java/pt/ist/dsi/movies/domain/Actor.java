@@ -16,12 +16,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 public class Actor {
     
-    public interface View {
-        public interface WithCharacters extends View {
-            
-        }
-    }
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -40,12 +34,12 @@ public class Actor {
         this.characters = new HashSet<>();
     }
     
-    @JsonView({ View.class })
+    @JsonView(View.class)
     public Long getId() {
         return id;
     }
     
-    @JsonView({ View.class })
+    @JsonView(View.class)
     public String getName() {
         return name;
     }
@@ -54,7 +48,7 @@ public class Actor {
         this.name = name;
     }
     
-    @JsonView({ View.WithCharacters.class })
+    @JsonView(View.ActorWithCharacters.class)
     public Set<Character> getCharacters() {
         return characters;
     }

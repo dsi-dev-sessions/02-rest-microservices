@@ -1,7 +1,5 @@
 package pt.ist.dsi.movies.domain;
 
-import pt.ist.dsi.movies.domain.Actor.View;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,20 +34,21 @@ public class Movie {
         
     }
     
-    @JsonView({ View.WithCharacters.class })
+    @JsonView(View.class)
     public Long getId() {
         return id;
     }
     
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    @JsonView({ View.WithCharacters.class })
+    @JsonView(View.class)
     public String getTitle() {
         return title;
     }
     
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    @JsonView(View.MovieWithCharacters.class)
     public Set<Character> getCharacters() {
         return characters;
     }

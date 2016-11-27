@@ -1,7 +1,5 @@
 package pt.ist.dsi.movies.domain;
 
-import pt.ist.dsi.movies.domain.Actor.View;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,30 +33,32 @@ public class Character {
         this.movie = movie;
     }
     
+    @JsonView(View.class)
     public Long getId() {
         return id;
     }
     
-    @JsonView({ View.WithCharacters.class })
+    @JsonView(View.class)
     public String getName() {
         return name;
+    }
+    
+    @JsonView(View.Movie.class)
+    public Actor getActor() {
+        return actor;
+    }
+    
+    @JsonView(View.Actor.class)
+    public Movie getMovie() {
+        return movie;
     }
     
     public void setName(String name) {
         this.name = name;
     }
     
-    public Actor getActor() {
-        return actor;
-    }
-    
     public void setActor(Actor actor) {
         this.actor = actor;
-    }
-    
-    @JsonView({ View.WithCharacters.class })
-    public Movie getMovie() {
-        return movie;
     }
     
     public void setMovie(Movie movie) {
