@@ -30,8 +30,8 @@ services:
       - MOVIE_NAME=star
 
   ratings-service:
-    build: ./rating-service
-    #image: dsidevsessions/rating-service
+    #build: ./rating-service
+    image: dsidevsessions/rating-service
     environment:
       - NEO4J_HOSTNAME=neo4j
       - JWT_SECRET=123
