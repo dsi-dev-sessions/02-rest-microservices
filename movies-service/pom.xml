@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>movies-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Movies Service</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

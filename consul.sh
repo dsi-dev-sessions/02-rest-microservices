@@ -1,2 +1,2 @@
 #!/bin/sh
-docker rm -f dev-consul && docker run -d -p 8500:8500 --name dev-consul consul && docker ps
+docker rm -f service-discovery && docker run -d -p 8500:8500 --name service-discovery consul && docker ps

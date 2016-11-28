@@ -8,10 +8,8 @@ services:
     build: ./movies-service
     volumes:
       - "/Users/sfbs/.m2:/root/.m2"
-    ports:
-      - "8082:8080"
     links:
-      - dev-consul
+      - service-discovery
     environment:
       - MOVIE_NAME=batman
 
@@ -19,51 +17,54 @@ services:
     build: ./movies-service
     volumes:
       - "/Users/sfbs/.m2:/root/.m2"
-    ports:
-      - "8081:8080"
     links:
-      - dev-consul
+      - service-discovery
     environment:
       - MOVIE_NAME=star
 
-  rating-service:
+  ratings-service:
     build: ./rating-service
     environment:
-    - NEO4J_HOSTNAME=neo4j
-    - JWT_SECRET=123
-    ports:
-    - 3000:3000    
+      - NEO4J_HOSTNAME=neo4j
+      - JWT_SECRET=123
+    links:
+      - service-discovery
 
+    
 ##### ################### #####
 #####    API Gateway      #####
 ##### ################### #####
-  api:
+  api-gateway:
     build: ./api-gateway
     volumes:
       - "/Users/sfbs/.m2:/root/.m2"
     ports:
       - "8000:8080"
     links:
-      - dev-consul
+      - service-discovery
 
 ##### ############################## #####
 ##### Monitoring & Service Discovery #####
 ##### ############################## #####
   zipkin-server:
-    build: ./tracer-dashboard
+    build: ./zipkin-server
     volumes:
       - "/Users/sfbs/.m2:/root/.m2"
     links:
-      - dev-consul
+      - service-discovery
+    ports:
+      - "8502:9411"
 
   hystrix-dashboard:
     build: ./hystrix-dashboard
     volumes:
       - "/Users/sfbs/.m2:/root/.m2"
     links:
-      - dev-consul
+      - service-discovery
+    ports:
+      - "8501:8080"
 
-  dev-consul:
+  service-discovery:
     image: consul
     ports:
       - "8500:8500"
@@ -75,11 +76,3 @@ services:
     image: neo4j
     environment:
     - NEO4J_AUTH=none
-    ports:
-    - 7474:7474
-
-  # test:
-  #   image: uzyexe/curl
-  #   command: -v -X PUT http://dev-consul:8500/v1/agent/service/register
-  #   links:
-  #     - dev-consul

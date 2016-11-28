@@ -7,7 +7,7 @@ const HOST = require('os').hostname();
 
 var bodyParser = require('body-parser');
 var consul = require('consul')({
-    host: "dev-consul"
+    host: "service-discovery"
 });
 
 consul.agent.service.register({ 
@@ -81,7 +81,7 @@ app.post('/ratings', checkAuth, function (req, res) {
     const session = driver.session();
     session.run(query, params).then((result) => {
         session.close();
-        res.status(201).send({});
+        res.status(201).send(req.body);
     }).
     catch((err) => {
         console.log(err);
@@ -96,6 +96,39 @@ app.post('/ratings', checkAuth, function (req, res) {
 //
 // });
 
+const populate = function(params) {
+    const query = `
+            MERGE (movie:MOVIE { id: {movie} })
+            MERGE (user:USER { username: {username} })
+            MERGE (movie)<-[r:RATED]-(user)
+            SET r.rating = {rating}
+        `;
+    const session = driver.session();
+    session.run(query, params).then((result) => {
+        session.close();
+    }).
+    catch((err) => {
+        session.close();
+    });
+};
+
+populate({
+    movie : 1,
+    username : "user5",
+    rating: 1
+});
+
+populate({
+    movie : 2,
+    username : "user5",
+    rating: 2
+});
+
+populate({
+    movie : 3,
+    username : "user5",
+    rating: 3
+});
 
 app.listen(PORT, function () {
     console.log('Example app listening on port ' + PORT)
