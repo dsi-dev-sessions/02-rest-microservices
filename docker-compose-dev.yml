@@ -1,0 +1,85 @@
+########################
+# Uncomment build and volumes and comment image
+# to build and run local changes to services
+########################
+
+version: '2'
+services:
+
+##### ################### #####
+##### Services Instances  #####
+##### ################### #####
+  batman-service:
+    #image: dsidevsessions/movies-service
+    build: ./movies-service
+    volumes:
+      - ${HOME}/.m2:/root/.m2
+    links:
+      - service-discovery
+    environment:
+      - MOVIE_NAME=batman
+
+  star-service:
+    #image: dsidevsessions/movies-service
+    build: ./movies-service
+    volumes:
+      - ${HOME}/.m2:/root/.m2
+    links:
+      - service-discovery
+    environment:
+      - MOVIE_NAME=star
+
+  ratings-service:
+    #build: ./rating-service
+    image: dsidevsessions/rating-service
+    environment:
+      - NEO4J_HOSTNAME=neo4j
+      - JWT_SECRET=123
+    links:
+      - service-discovery
+
+    
+##### ################### #####
+#####    API Gateway      #####
+##### ################### #####
+  api-gateway:
+    #image: dsidevsessions/api-gateway
+    build: ./api-gateway
+    volumes:
+      - ${HOME}/.m2:/root/.m2
+    ports:
+      - "8000:8080"
+    links:
+      - service-discovery
+
+##### ############################## #####
+##### Monitoring & Service Discovery #####
+##### ############################## #####
+  zipkin-server:
+    #build: ./zipkin-server
+    image: dsidevsessions/zipkin-server
+    links:
+      - service-discovery
+    ports:
+      - "8502:9411"
+
+  hystrix-dashboard:
+    #build: ./hystrix-dashboard
+    image: dsidevsessions/hystrix-dashboard
+    links:
+      - service-discovery
+    ports:
+      - "8501:8080"
+
+  service-discovery:
+    image: consul
+    ports:
+      - "8500:8500"
+
+##### ############################## #####
+##### Datastores                     #####
+##### ############################## #####
+  neo4j:
+    image: neo4j
+    environment:
+    - NEO4J_AUTH=none
