@@ -1,7 +1,3 @@
-FROM maven:3-jdk-8
+FROM maven:3-jdk-8-onbuild
 
-COPY . /app
-
-WORKDIR /app
-
-CMD ["/usr/bin/mvn", "compile", "spring-boot:run"]
+CMD ["java", "-jar", "target/zipkin-server-0.0.1-SNAPSHOT.jar"]

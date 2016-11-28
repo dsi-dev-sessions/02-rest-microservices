@@ -1,3 +1,8 @@
+########################
+# Uncomment build and volumes and comment image
+# to build and run local changes to services
+########################
+
 version: '2'
 services:
 
@@ -5,18 +10,20 @@ services:
 ##### Services Instances  #####
 ##### ################### #####
   batman-service:
-    build: ./movies-service
-    volumes:
-      - "/Users/sfbs/.m2:/root/.m2"
+    image: dsidevsessions/movies-service
+    #build: ./movies-service
+    #volumes:
+    #  - ${HOME}/.m2:/root/.m2
     links:
       - service-discovery
     environment:
       - MOVIE_NAME=batman
 
   star-service:
-    build: ./movies-service
-    volumes:
-      - "/Users/sfbs/.m2:/root/.m2"
+    image: dsidevsessions/movies-service
+    #build: ./movies-service
+    #volumes:
+    #  - ${HOME}/.m2:/root/.m2
     links:
       - service-discovery
     environment:
@@ -24,6 +31,7 @@ services:
 
   ratings-service:
     build: ./rating-service
+    #image: dsidevsessions/rating-service
     environment:
       - NEO4J_HOSTNAME=neo4j
       - JWT_SECRET=123
@@ -35,9 +43,10 @@ services:
 #####    API Gateway      #####
 ##### ################### #####
   api-gateway:
-    build: ./api-gateway
-    volumes:
-      - "/Users/sfbs/.m2:/root/.m2"
+    image: dsidevsessions/api-gateway
+    #build: ./api-gateway
+    #volumes:
+    #  - ${HOME}/.m2:/root/.m2
     ports:
       - "8000:8080"
     links:
@@ -47,18 +56,16 @@ services:
 ##### Monitoring & Service Discovery #####
 ##### ############################## #####
   zipkin-server:
-    build: ./zipkin-server
-    volumes:
-      - "/Users/sfbs/.m2:/root/.m2"
+    #build: ./zipkin-server
+    image: dsidevsessions/zipkin-server
     links:
       - service-discovery
     ports:
       - "8502:9411"
 
   hystrix-dashboard:
-    build: ./hystrix-dashboard
-    volumes:
-      - "/Users/sfbs/.m2:/root/.m2"
+    #build: ./hystrix-dashboard
+    image: dsidevsessions/hystrix-dashboard
     links:
       - service-discovery
     ports:
