@@ -34,7 +34,7 @@ class MovieNamesRestController {
         this.ratingsReader = ratingsReader;
     }
     
-    @RequestMapping(path = "hello", method = RequestMethod.GET)
+    @GetMapping("/hello")
     public String hello() {
         return "Hello from API Gateway!";
     }
@@ -44,15 +44,14 @@ class MovieNamesRestController {
         return moviesReader.getMovies();
     }
     
-    @SuppressWarnings("unused")
-    public Collection<String> movieNamesFallback() {
-        return Stream.of("Mock Movie 1", "Mock Movie 2", "Mock Movie 3").collect(Collectors.toList());
-    }
-    
     @HystrixCommand(fallbackMethod = "movieNamesFallback")
     @RequestMapping(path = "names", method = RequestMethod.GET)
     public Collection<String> getMovieNames() {
         return moviesReader.getMovies().getContent().stream().map(Movie::getTitle).collect(Collectors.toList());
+    }
+    
+    public Collection<String> movieNamesFallback() {
+        return Stream.of("Mock Movie 1", "Mock Movie 2", "Mock Movie 3").collect(Collectors.toList());
     }
     
     @RequestMapping(path = "{movieId}", method = RequestMethod.GET)
